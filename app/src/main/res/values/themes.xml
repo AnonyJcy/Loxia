@@ -1,0 +1,75 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LoXia" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryContainer">@color/pink_secondary</item>
+        <item name="android:dialogCornerRadius">24dp</item>
+        <item name="colorSurfaceContainerHigh">@color/bg_soft</item>
+        <item name="android:fontFamily">@font/harmonyos_sans</item>
+        <item name="fontFamily">@font/harmonyos_sans</item>
+    </style>
+
+    <style name="Theme.LoXia" parent="Base.Theme.LoXia">
+        <item name="materialCardViewStyle">@style/Widget.LoXia.CardView</item>
+    </style>
+
+    <!-- 全局卡片样式：统一浅灰细描边 + 保留阴影 -->
+    <style name="Widget.LoXia.CardView" parent="Widget.Material3.CardView.Outlined">
+        <item name="strokeWidth">@dimen/card_stroke_width</item>
+        <item name="strokeColor">@color/card_border</item>
+    </style>
+
+    <style name="RoundedAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">24dp</item>
+        <item name="colorPrimary">@color/pink_primary</item>
+    </style>
+
+    <style name="BottomNavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/nav_indicator_bg</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="BottomNavTextActive" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="BottomNavTextInactive" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- 全局按钮样式规范 -->
+    <style name="Widget.LoXia.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="backgroundTint">@color/pink_primary</item>
+    </style>
+
+    <style name="Widget.LoXia.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="strokeColor">@color/pink_primary</item>
+        <item name="android:textColor">@color/pink_primary</item>
+    </style>
+
+    <style name="Widget.LoXia.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textColor">@color/pink_primary</item>
+    </style>
+
+    <!-- UCrop 裁剪界面主题 -->
+    <style name="UCropTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:statusBarColor">@color/pink_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryDark">@color/pink_primary</item>
+    </style>
+</resources>

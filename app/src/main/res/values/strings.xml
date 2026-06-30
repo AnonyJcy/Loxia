@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LoXia</string>
+    <string name="title_wardrobes">我的衣柜</string>
+    <string name="title_home">主页</string>
+    <string name="title_overview">总览</string>
+    <string name="title_detail">柜子详情</string>
+    <string name="title_add">添加衣服</string>
+    <string name="title_profile">我的</string>
+    <string name="action_save">保存衣服记录</string>
+    <string name="hint_name">衣服名称</string>
+    <string name="hint_store">店铺/品牌</string>
+    <string name="hint_channel">购买渠道</string>
+    <string name="hint_price">价格（元）</string>
+    <string name="hint_date">购入时间</string>
+    <string name="hint_status">衣服状态</string>
+    <string name="hint_remind">提醒日期</string>
+    <string name="hint_remark">备注</string>
+    <string name="search_placeholder">搜索名称或店铺</string>
+    <string name="profile_name">草莓收藏家</string>
+    <string name="profile_desc">连续记录 42 天 · 今日宜搭配粉白系</string>
+    <string name="hint_earnest_money">意向金</string>
+    <string name="hint_full_payment">是否全款</string>
+    <string name="hint_full_payment_amount">全款金额</string>
+    <string name="hint_tail_payment">尾款</string>
+    <string name="hint_tail_payment_date">补尾款日期</string>
+    <string name="upload_main_image">上传主图</string>
+    <string name="title_profile_detail">个人资料</string>
+    <string name="change_avatar">点击更换头像</string>
+    <string name="hint_nickname">输入昵称</string>
+    <string name="label_daily_slogan">今日标语</string>
+    <string name="action_save_profile">保存资料</string>
+    <string name="title_theme_settings">主题设置</string>
+    <string name="theme_mode_light">浅色模式</string>
+    <string name="theme_mode_dark">深色模式</string>
+    <string name="theme_mode_system">跟随系统</string>
+    <string name="theme_save">保存并应用</string>
+    <string name="title_notifications">通知设置</string>
+    <string name="notif_main_toggle">启用通知提醒</string>
+    <string name="notif_main_desc">开启后将在尾款到期前发送提醒通知</string>
+    <string name="notif_days_label">提前提醒天数</string>
+    <string name="notif_days_desc">设置在尾款到期前几天开始提醒</string>
+    <string name="notif_status_label">按状态通知</string>
+    <string name="notif_status_desc">选择需要接收通知的衣服状态</string>
+    <string name="notif_test">发送测试提醒消息</string>
+    <string name="notif_save">保存设置</string>
+    <string name="status_daiqiang">待抢</string>
+    <string name="status_fuyixiang">付意向</string>
+    <string name="status_fudingjin">付定金</string>
+    <string name="status_buweikuan">补尾款</string>
+    <string name="status_daifahuo">待发货</string>
+    <string name="status_daoshou">已到手</string>
+    <string name="title_data_import">数据导入</string>
+    <string name="menu_data_import">数据导入</string>
+    <string name="import_hint_text">粘贴衣服数据到此处…</string>
+    <string name="import_parse">解析预览</string>
+    <string name="import_select_wardrobe">导入到柜子：未选</string>
+    <string name="import_confirm">确认导入</string>
+    <string name="import_parsed_count">解析到 %d 件衣服</string>
+    <string name="import_none_parsed">未解析到有效数据，请检查格式</string>
+    <string name="notif_test_sent">测试提醒已发送</string>
+    <string name="notif_time_label">每日提醒时间</string>
+    <string name="notif_time_desc">设置每天在此时检查并发送提醒</string>
+    <string name="notif_freq_label">提醒频率</string>
+    <string name="notif_freq_once">仅一次</string>
+    <string name="notif_freq_multiple">提前多次</string>
+    <string name="notif_freq_recurring">每日循环</string>
+    <string name="notif_advance_label">各状态提前天数</string>
+    <string name="notif_advance_daiqiang">待抢提前天数</string>
+    <string name="notif_advance_fuyixiang">付意向提前天数</string>
+    <string name="notif_advance_fudingjin">付定金提前天数</string>
+    <string name="notif_advance_buweikuan">补尾款提前天数</string>
+    <string name="notif_style_label">通知样式</string>
+    <string name="notif_custom_title">自定义标题</string>
+    <string name="notif_sound_mode">铃声模式</string>
+    <string name="notif_sound_default">默认铃声</string>
+    <string name="notif_sound_soft">柔和</string>
+    <string name="notif_sound_silent">静音</string>
+    <string name="notif_show_badge">显示角标</string>
+    <string name="notif_silent_mode">静默模式（无振动）</string>
+    <string name="ai_import_title">AI智能导入</string>
+    <string name="ai_import_desc">将提示词复制到AI助手，配合截图即可自动解析并导入</string>
+    <string name="ai_prompt_standard_label">通用标准版 - 推荐</string>
+    <string name="ai_prompt_compact_label">精简极速版</string>
+    <string name="ai_prompt_copy_success">提示词已复制到剪贴板</string>
+    <string name="ai_prompt_switch_hint">请切换到豆包等AI应用，上传裙子照片并发送提示词</string>
+    <string name="import_step1_title">复制 AI 提示词</string>
+    <string name="import_step1_desc">点击下方按钮复制提示词，然后切换到豆包等 AI 应用，上传裙子照片并发送提示词</string>
+    <string name="import_step2_title">粘贴 AI 返回数据</string>
+    <string name="import_step2_desc">将 AI 返回的裙子信息粘贴到下方</string>
+    <string name="import_step3_title">选择导入目标</string>
+    <string name="import_parse_success">解析成功</string>
+    <string name="import_parse_failed">解析失败，请检查数据格式</string>
+    <string name="import_format_help">支持的数据格式</string>
+    <string name="ai_prompt_standard">精准识别图片中裙子的全部信息，严格遵守所有强制铁律，绝对禁止编造、自由发挥：\n\n## 1. 固定字段&amp;绝对顺序（永远不许调换）\n衣服名称 衣服状态 店铺名称 品牌名称 购买渠道 购入时间 运费 意向金 定金 尾款 全款\n\n## 2. 衣服状态限定\n仅允许使用以下6个官方状态词，禁止自创：\n待抢 / 付意向 / 付定金 / 补尾款 / 待发货 / 已到手\n自动状态映射：\n已拥有 → 已到手\n待补尾款 → 补尾款\n待入金 → 付意向\n\n## 3. 金额核心强制逻辑\n1. 只要定金、尾款任意一项识别到有效金额，全款字段必须强制填写「空」\n2. 页面仅标注单件总价/单价、无定金尾款拆分标注时，该金额直接填入全款字段，定金、尾款强制填「空」\n3. 意向金特殊规则：意向金识别到就如实填写，不受全款/尾款状态限制\n4. 完美兼容整数、小数金额，精准保留全部小数点，禁止篡改、四舍五入\n\n## 4. 日期专属兜底规则\n1. 图片里清晰标注了购买日期，原样完整提取年月日\n2. 图片里完全没有购入/购买时间，该字段必须固定填「空」，绝对禁止编造、推测、乱补虚假日期\n\n## 5. 防幻觉&amp;模糊兜底\n- 优先一字不差提取页面顶部的裙子专属名称\n- 文字轻微模糊、遮挡时，尽力辨认还原原文\n- 100%看不清、图中不存在的信息，全部统一填「空」，严禁凭空捏造任何内容\n\n## 6. 输出铁律\n- 字段之间只用单个空格隔开\n- 一条裙子单独占一行\n- 全程只输出最终结果，不许加标点、换行、多余解释、前缀后缀、额外说明</string>
+    <string name="ai_prompt_compact">帮我识别截图里所有Lolita衣柜全部数据严格按照LoXia裙柜导入标准提取裙名品牌分类尺码价格渠道全部交易状态待抢意向定金尾款全款对应全部时间节点个人备注标签置顶排序状态收藏信息，不准遗漏任何内容不准搞错裙子状态时间完整精确备注原样保留最终整理成可直接导入APP的标准结构化数据只输出数据内容无需多余文字。</string>
+    <string name="ai_prompt_premium_label">高阶精准版</string>
+    <string name="ai_prompt_copy">复制提示词</string>
+    <string name="ai_prompt_premium">你现在担任LoXia裙柜APP专属数据解析助手专业解析各类Lolita衣柜软件截图内容执行以下强制要求，全盘扫描截图内所有服饰条目100%全量提取禁止缺漏少项丢数据，严格划分五大状态待抢付意向付定金补尾款全款精准判定每条裙子当前状态严禁判定错误，逐一提取对应专属时间栏每项状态绑定独立时间统一归类整合不拆分不乱放，完整收录名称品牌款式颜色尺码金额购买途径个人备注自定义标签置顶属性排序优先级收藏状态全部字段，自动过滤界面无关元素只保留用户个人衣柜有效存档信息，最终排版为标准导入格式结构工整数据规整直接支持一键导入LoXia裙柜，回复仅输出整理完毕的导入数据不添加任何多余回答客套对话额外说明。</string>
+    <string name="total_cost_hidden">****</string>
+    <string name="total_cost_dialog_message">真的要看总金额吗？🥺🥺🥺</string>
+    <string name="view_total_cost">查看总花费</string>
+
+    <string-array name="slogan_pool">
+        <item>于方寸衣柜之间，收纳万千裙摆浪漫</item>
+        <item>岁岁积攒温柔裙装，日日奔赴裙摆星光</item>
+        <item>藏起一柜细碎美好，留住每段裙摆时光</item>
+        <item>以裙为序，以热爱为期，慢慢积攒满心欢喜</item>
+        <item>衣柜盛满温柔裙摆，日子裹着细腻浪漫</item>
+        <item>邂逅每一件心动小裙，珍藏每一段少女时光</item>
+        <item>收集世间温柔裙摆，定格独属于我的浪漫日常</item>
+        <item>与裙装朝夕相伴，让热爱岁岁生生不息</item>
+        <item>以裙摆赴人间烟火，以热爱守内心绵长</item>
+        <item>收纳所有心动瞬间，沉淀专属的裙柜温柔</item>
+        <item>裙摆摇曳藏尽诗意，热爱绵长不负朝夕</item>
+        <item>为爱裙掏空小小钱包，用裙摆填满大大快乐</item>
+        <item>深陷种草无法自拔，衣柜塞满快乐裙装</item>
+        <item>一边吃土努力攒钱，一边收集绝美裙摆</item>
+        <item>裙装堆成小小宇宙，快乐塞满整个日常</item>
+        <item>沉迷小裙无法自拔，热爱永远热烈滚烫</item>
+        <item>今日宜邂逅绝美裙装，解锁专属少女浪漫</item>
+        <item>今日宜整理满柜裙摆，收纳一整天的温柔欢喜</item>
+        <item>今日宜奔赴裙装上新，捕获不期而遇的心动</item>
+        <item>今日宜珍藏心头好裙，延续长久不变的热爱</item>
+        <item>今日宜搭配漂亮裙摆，开启闪闪发光的日常</item>
+    </string-array>
+    <string name="title_dress_detail">衣服详情</string>
+    <string name="title_edit_dress">编辑衣服</string>
+    <string name="title_stats">收藏日程</string>
+    <string name="action_close">关闭</string>
+    <string name="label_total_count">总件数</string>
+    <string name="label_total_cost">总花费</string>
+    <string name="action_add_wardrobe">添加柜子</string>
+    <string name="label_dress_image">衣服主图</string>
+    <string name="label_wardrobe_name">所属柜子</string>
+    <string name="label_price">标价</string>
+    <string name="label_deposit">定金</string>
+    <string name="label_shipping_fee">运费</string>
+    <string name="label_shipping_free">包邮</string>
+    <string name="label_time_nodes">时间节点</string>
+    <string name="label_main_image_preview">主图预览</string>
+    <string name="action_upload_main_image">点击上传主图</string>
+    <string name="label_dress_status">衣服状态</string>
+    <string name="hint_daiqiang_time">待抢时间</string>
+    <string name="hint_yixiang_deadline">付意向截止时间</string>
+    <string name="hint_dingjin_time">付定金时间</string>
+    <string name="hint_buweikuan_time">补尾款时间</string>
+    <string name="label_full_payment_option">全款支付（勾选后隐藏定金尾款，仅填写全款金额）</string>
+    <string name="action_search">搜索</string>
+    <string name="label_all">全部</string>
+    <string name="label_month_new">本月新增</string>
+    <string name="label_notifications_and_reminders">通知与提醒</string>
+    <string name="label_tail_payment_list">补尾款时间列表</string>
+    <string name="label_sort_date_asc">日期 ↑</string>
+    <string name="label_status_distribution">状态分布</string>
+    <string name="title_schedule_center">收藏日程</string>
+    <string name="label_upcoming_events">近期需要处理</string>
+    <string name="label_view_more">查看更多</string>
+    <string name="label_no_upcoming">近期没有待办事项</string>
+    <string name="label_this_month_payment">本月待支付</string>
+    <string name="label_future_30_days">未来30天待办</string>
+    <string name="label_month_matrix">年度月份矩阵</string>
+    <string name="label_event_type_stats">节点类型统计</string>
+    <string name="label_no_events">暂无安排</string>
+    <string name="label_days_remaining">剩余%d天</string>
+    <string name="label_event_count">%d个节点</string>
+    <string name="label_month_format">%d月</string>
+    <string name="label_year_format">%1$d年%2$d月</string>
+    <string name="label_no_upcoming_easy">✨ 最近很轻松</string>
+    <string name="label_no_upcoming_desc">未来30天暂无待办事项</string>
+    <string name="label_no_events_month">📅 本月暂无安排</string>
+    <string name="label_no_events_month_desc">返回查看其它月份</string>
+    <string name="label_more_stats">更多统计</string>
+    <string name="label_collapse">收起</string>
+</resources>

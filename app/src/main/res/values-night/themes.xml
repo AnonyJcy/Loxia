@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.LoXia" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryContainer">@color/pink_secondary</item>
+        <item name="android:dialogCornerRadius">24dp</item>
+        <item name="colorSurfaceContainerHigh">@color/bg_dark</item>
+        <item name="android:colorBackground">@color/bg_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorOnSurface">@color/text_primary_dark</item>
+        <item name="colorOnBackground">@color/text_primary_dark</item>
+    </style>
+
+    <style name="Theme.LoXia" parent="Base.Theme.LoXia">
+        <item name="materialCardViewStyle">@style/Widget.LoXia.CardView</item>
+    </style>
+
+    <!-- 全局卡片样式：统一深灰细描边 + 保留阴影 -->
+    <style name="Widget.LoXia.CardView" parent="Widget.Material3.CardView.Outlined">
+        <item name="strokeWidth">@dimen/card_stroke_width</item>
+        <item name="strokeColor">@color/card_border</item>
+    </style>
+
+    <!-- UCrop 裁剪界面主题（深色模式） -->
+    <style name="UCropTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:statusBarColor">@color/pink_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">@color/pink_primary</item>
+        <item name="colorPrimaryDark">@color/pink_primary</item>
+    </style>
+</resources>

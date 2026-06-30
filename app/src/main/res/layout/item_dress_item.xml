@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:strokeWidth="0dp"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/card_bg_white"
+    android:outlineSpotShadowColor="@color/shadow_spot"
+    android:outlineAmbientShadowColor="@color/shadow_ambient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/ivDressImage"
+            android:layout_width="94dp"
+            android:layout_height="94dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_image_placeholder"
+            android:contentDescription="衣服图片" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDressName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="衣服名称"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDressDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="¥899 · 2026-04-20 · 梦回茶会"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

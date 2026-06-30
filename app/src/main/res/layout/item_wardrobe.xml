@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardBackgroundColor="@color/card_bg_white"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/card_stroke"
+    app:cardElevation="@dimen/card_elevation_soft"
+    android:outlineSpotShadowColor="@color/shadow_spot"
+    android:outlineAmbientShadowColor="@color/shadow_ambient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <FrameLayout
+            android:id="@+id/previewContainer"
+            android:layout_width="84dp"
+            android:layout_height="84dp">
+
+            <ImageView
+                android:id="@+id/ivPreviewDefault"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/wardrobe_default"
+                android:padding="12dp"
+                android:contentDescription="默认衣柜图标" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvWardrobeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="柜子名称"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWardrobeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="0 件 · 最近更新 2026-04-01"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/tvDemoBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/card_border"
+                    android:paddingStart="@dimen/spacing_sm"
+                    android:paddingTop="@dimen/spacing_xs"
+                    android:paddingEnd="@dimen/spacing_sm"
+                    android:paddingBottom="@dimen/spacing_xs"
+                    android:text="演示柜子 · 长按管理"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvWardrobeBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/pink_secondary"
+                    android:paddingStart="@dimen/spacing_sm"
+                    android:paddingTop="@dimen/spacing_xs"
+                    android:paddingEnd="@dimen/spacing_sm"
+                    android:paddingBottom="@dimen/spacing_xs"
+                    android:text="查看详情"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_caption" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
