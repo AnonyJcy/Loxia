@@ -48,3 +48,6 @@ CLAUDE.md
 # Signing keys (never commit)
 *.jks
 *.keystore
+
+design_system.md
+docs/
