@@ -35,18 +35,14 @@ class StatsPageManager(
     private var tvYearTitle: TextView? = null
     private var tvViewMore: TextView? = null
     private var llNoUpcoming: LinearLayout? = null
-    private var headerMoreStats: View? = null
-    private var tvMoreStatsToggle: TextView? = null
 
     // RecyclerView
     private lateinit var rvUpcomingEvents: RecyclerView
     private lateinit var rvMonthTimeline: RecyclerView
-    private lateinit var rvEventTypeStats: RecyclerView
 
     // Adapter
     private lateinit var eventAdapter: CollectionEventAdapter
     private lateinit var monthAdapter: MonthCardAdapter
-    private lateinit var eventTypeAdapter: EventTypeTagAdapter
 
     // 状态
     private var isStatsExpanded = false
@@ -64,20 +60,13 @@ class StatsPageManager(
         tvViewMore = page.findViewById(R.id.tvViewMore)
         llNoUpcoming = page.findViewById(R.id.llNoUpcoming)
 
-        // 初始化折叠头部
-        headerMoreStats = page.findViewById(R.id.headerMoreStats)
-        tvMoreStatsToggle = page.findViewById(R.id.tvMoreStatsToggle)
-
         // 初始化 RecyclerView
         rvUpcomingEvents = page.findViewById(R.id.rvUpcomingEvents)
         rvMonthTimeline = page.findViewById(R.id.rvMonthTimeline)
-        rvEventTypeStats = page.findViewById(R.id.rvEventTypeStats)
 
         // 设置适配器
         setupUpcomingEventsList()
         setupMonthTimeline()
-        setupEventTypeStats()
-        setupCollapsibleStats()
 
         // 设置查看更多点击事件
         tvViewMore?.setOnClickListener {
@@ -110,31 +99,6 @@ class StatsPageManager(
         rvMonthTimeline.apply {
             layoutManager = LinearLayoutManager(appContext, LinearLayoutManager.HORIZONTAL, false)
             adapter = monthAdapter
-        }
-    }
-
-    /**
-     * 设置事件类型统计
-     */
-    private fun setupEventTypeStats() {
-        eventTypeAdapter = EventTypeTagAdapter { eventType ->
-            navigateToFilteredEvents(eventType)
-        }
-        rvEventTypeStats.apply {
-            layoutManager = GridLayoutManager(appContext, 2)
-            adapter = eventTypeAdapter
-            isNestedScrollingEnabled = false
-        }
-    }
-
-    /**
-     * 设置折叠统计
-     */
-    private fun setupCollapsibleStats() {
-        headerMoreStats?.setOnClickListener {
-            isStatsExpanded = !isStatsExpanded
-            rvEventTypeStats.visibility = if (isStatsExpanded) View.VISIBLE else View.GONE
-            tvMoreStatsToggle?.text = if (isStatsExpanded) "▲" else "▼"
         }
     }
 
@@ -182,7 +146,6 @@ class StatsPageManager(
         updateOverviewStats(allEvents)
         updateUpcomingEvents(allEvents)
         updateMonthTimeline(allEvents)
-        updateEventTypeStats(allEvents)
     }
 
     /**
@@ -274,20 +237,6 @@ class StatsPageManager(
     }
 
     /**
-     * 更新事件类型统计
-     */
-    private fun updateEventTypeStats(events: List<CollectionEvent>) {
-        val typeStats = EventAggregator.getEventTypeStatistics(events)
-        val typeCards = EventType.entries.map { type ->
-            EventTypeTagAdapter.EventTypeData(
-                type = type,
-                count = typeStats[type] ?: 0
-            )
-        }
-        eventTypeAdapter.submitList(typeCards)
-    }
-
-    /**
      * 设置缓存数据
      */
     fun setCachedItems(items: List<DressItem>) {
@@ -312,12 +261,5 @@ class StatsPageManager(
             putExtra("month", month)
         }
         context.startActivity(intent)
-    }
-
-    /**
-     * 跳转到筛选的事件列表
-     */
-    private fun navigateToFilteredEvents(eventType: EventType) {
-        // TODO: 实现筛选事件列表页面
     }
 }

@@ -2,6 +2,7 @@ package com.cy.loxia
 
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 /**
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter
  */
 object EventAggregator {
 
+    private val zone: ZoneId = ZoneId.systemDefault()
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     /**
@@ -62,7 +64,7 @@ object EventAggregator {
      * 获取未来 N 天内的事件
      */
     fun getUpcomingEvents(events: List<CollectionEvent>, days: Int): List<CollectionEvent> {
-        val today = LocalDate.now()
+        val today = LocalDate.now(zone)
         val endDate = today.plusDays(days.toLong())
 
         return events.filter { event ->
@@ -79,6 +81,7 @@ object EventAggregator {
      * 获取指定月份的事件
      */
     fun getEventsByMonth(events: List<CollectionEvent>, year: Int, month: Int): List<CollectionEvent> {
+        // Note: year/month filtering uses parsed LocalDate, no zone dependency
         return events.filter { event ->
             try {
                 val eventDate = LocalDate.parse(event.eventDate, dateFormatter)
@@ -123,15 +126,15 @@ object EventAggregator {
      * 计算本月待支付金额
      */
     fun getThisMonthPendingAmount(events: List<CollectionEvent>): Double {
-        val today = LocalDate.now()
-        val thisMonth = YearMonth.now()
+        val today = LocalDate.now(zone)
+        val thisMonth = YearMonth.now(zone)
 
         return events.filter { event ->
             try {
                 val eventDate = LocalDate.parse(event.eventDate, dateFormatter)
                 eventDate.year == thisMonth.year &&
                 eventDate.monthValue == thisMonth.monthValue &&
-                eventDate.isAfter(today.minusDays(1)) &&
+                !eventDate.isBefore(today) &&
                 event.amount > 0
             } catch (e: Exception) {
                 false

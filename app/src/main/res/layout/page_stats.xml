@@ -107,7 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/card_padding">
+                android:padding="@dimen/card_padding"
+                android:animateLayoutChanges="true">
 
                 <!-- 标题栏 -->
                 <LinearLayout
@@ -223,61 +224,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 第四部分：更多统计（折叠） -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            app:cardCornerRadius="@dimen/card_radius_large"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/card_stroke_pink"
-            app:cardBackgroundColor="@color/card_bg_white">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/card_padding">
-
-                <!-- 折叠头部 -->
-                <LinearLayout
-                    android:id="@+id/headerMoreStats"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/label_more_stats"
-                        android:textColor="@color/text_primary"
-                        android:textSize="@dimen/text_body_large"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvMoreStatsToggle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="▼"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="@dimen/text_body" />
-                </LinearLayout>
-
-                <!-- 事件类型标签网格（默认隐藏） -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvEventTypeStats"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

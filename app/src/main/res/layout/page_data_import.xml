@@ -99,12 +99,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
-                    android:text="📋 复制 AI 提示词"
+                    android:text="复制 AI 提示词"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold"
                     android:gravity="center"
                     app:cornerRadius="24dp"
                     app:backgroundTint="@color/pink_primary"
+                    android:textColor="@android:color/white"
+                    app:iconTint="@android:color/white"
                     app:icon="@android:drawable/ic_menu_set_as"
                     app:iconGravity="textStart"
                     app:iconSize="20dp" />
@@ -190,11 +192,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
-                    android:text="🔍 解析数据"
+                    android:text="解析数据"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold"
                     android:gravity="center"
                     app:backgroundTint="@color/pink_primary"
+                    android:textColor="@android:color/white"
                     app:cornerRadius="24dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -272,11 +275,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
-                    android:text="📥 确认导入"
+                    android:text="确认导入"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold"
                     android:gravity="center"
                     app:backgroundTint="@color/pink_primary"
+                    android:textColor="@android:color/white"
                     app:cornerRadius="24dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

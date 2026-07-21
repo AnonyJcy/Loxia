@@ -283,7 +283,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:animateLayoutChanges="true">
 
             <LinearLayout
                 android:layout_width="0dp"

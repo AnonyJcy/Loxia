@@ -96,10 +96,6 @@
     <string name="ai_prompt_compact">帮我识别截图里所有Lolita衣柜全部数据严格按照LoXia裙柜导入标准提取裙名品牌分类尺码价格渠道全部交易状态待抢意向定金尾款全款对应全部时间节点个人备注标签置顶排序状态收藏信息，不准遗漏任何内容不准搞错裙子状态时间完整精确备注原样保留最终整理成可直接导入APP的标准结构化数据只输出数据内容无需多余文字。</string>
     <string name="ai_prompt_premium_label">高阶精准版</string>
     <string name="ai_prompt_copy">复制提示词</string>
-    <string name="ai_prompt_premium">你现在担任LoXia裙柜APP专属数据解析助手专业解析各类Lolita衣柜软件截图内容执行以下强制要求，全盘扫描截图内所有服饰条目100%全量提取禁止缺漏少项丢数据，严格划分五大状态待抢付意向付定金补尾款全款精准判定每条裙子当前状态严禁判定错误，逐一提取对应专属时间栏每项状态绑定独立时间统一归类整合不拆分不乱放，完整收录名称品牌款式颜色尺码金额购买途径个人备注自定义标签置顶属性排序优先级收藏状态全部字段，自动过滤界面无关元素只保留用户个人衣柜有效存档信息，最终排版为标准导入格式结构工整数据规整直接支持一键导入LoXia裙柜，回复仅输出整理完毕的导入数据不添加任何多余回答客套对话额外说明。</string>
-    <string name="total_cost_hidden">****</string>
-    <string name="total_cost_dialog_message">真的要看总金额吗？🥺🥺🥺</string>
-    <string name="view_total_cost">查看总花费</string>
 
     <string-array name="slogan_pool">
         <item>于方寸衣柜之间，收纳万千裙摆浪漫</item>
@@ -124,7 +120,6 @@
         <item>今日宜珍藏心头好裙，延续长久不变的热爱</item>
         <item>今日宜搭配漂亮裙摆，开启闪闪发光的日常</item>
     </string-array>
-    <string name="title_dress_detail">衣服详情</string>
     <string name="title_edit_dress">编辑衣服</string>
     <string name="title_stats">收藏日程</string>
     <string name="action_close">关闭</string>
@@ -145,31 +140,18 @@
     <string name="hint_yixiang_deadline">付意向截止时间</string>
     <string name="hint_dingjin_time">付定金时间</string>
     <string name="hint_buweikuan_time">补尾款时间</string>
-    <string name="label_full_payment_option">全款支付（勾选后隐藏定金尾款，仅填写全款金额）</string>
+    <string name="label_full_payment_option">全款支付</string>
     <string name="action_search">搜索</string>
     <string name="label_all">全部</string>
     <string name="label_month_new">本月新增</string>
     <string name="label_notifications_and_reminders">通知与提醒</string>
-    <string name="label_tail_payment_list">补尾款时间列表</string>
-    <string name="label_sort_date_asc">日期 ↑</string>
-    <string name="label_status_distribution">状态分布</string>
-    <string name="title_schedule_center">收藏日程</string>
+
     <string name="label_upcoming_events">近期需要处理</string>
     <string name="label_view_more">查看更多</string>
-    <string name="label_no_upcoming">近期没有待办事项</string>
     <string name="label_this_month_payment">本月待支付</string>
     <string name="label_future_30_days">未来30天待办</string>
-    <string name="label_month_matrix">年度月份矩阵</string>
-    <string name="label_event_type_stats">节点类型统计</string>
-    <string name="label_no_events">暂无安排</string>
-    <string name="label_days_remaining">剩余%d天</string>
-    <string name="label_event_count">%d个节点</string>
-    <string name="label_month_format">%d月</string>
-    <string name="label_year_format">%1$d年%2$d月</string>
-    <string name="label_no_upcoming_easy">✨ 最近很轻松</string>
+    <string name="label_no_upcoming_easy">最近很轻松</string>
     <string name="label_no_upcoming_desc">未来30天暂无待办事项</string>
-    <string name="label_no_events_month">📅 本月暂无安排</string>
+    <string name="label_no_events_month">本月暂无安排</string>
     <string name="label_no_events_month_desc">返回查看其它月份</string>
-    <string name="label_more_stats">更多统计</string>
-    <string name="label_collapse">收起</string>
 </resources>

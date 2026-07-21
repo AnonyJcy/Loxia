@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     private ImageView ivMainImagePreview;
     private View layoutUploadPlaceholder;
     // Status checkboxes
-    private MaterialCheckBox cbDaiQiang, cbFuYixiang, cbFuDingjin, cbBuWeikuan, cbDaiFahuo, cbDaoShou;
+    private com.google.android.material.chip.Chip cbDaiQiang, cbFuYixiang, cbFuDingjin, cbBuWeikuan, cbDaiFahuo, cbDaoShou;
     // Per-status date fields
     private TextInputLayout layoutDaiqiangDate, layoutYixiangDate, layoutDingjinDate, layoutBuweikuanDate;
     private TextInputEditText etDaiqiangDate, etYixiangDate, etDingjinDate, etBuweikuanDate;
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     private TextInputEditText etBuyDateAdd;
     private TextInputEditText etEarnestMoneyAdd;
     private TextInputEditText etShippingFeeAdd;
-    private CheckBox cbFullPayment;
+    private com.google.android.material.materialswitch.MaterialSwitch cbFullPayment;
     private TextInputLayout layoutFullPaymentAmount;
     private TextInputEditText etFullPaymentAmountAdd;
     private TextInputLayout layoutTailPayment;
@@ -236,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     private ActivityResultLauncher<String> wardrobeCoverPickerLauncher;
     private ActivityResultLauncher<String> mainImagePickerLauncher;
     private ActivityResultLauncher<Intent> cropLauncher;
+    private ActivityResultLauncher<String> notificationPermissionLauncher;
     private Uri pendingCropTargetUri;
     private int pendingCropType; // 0=avatar, 1=cover, 2=mainImage
 
@@ -327,6 +328,16 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
                             .withOptions(options)
                             .getIntent(this);
                     cropLauncher.launch(cropIntent);
+                }
+            }
+        );
+
+        notificationPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            granted -> {
+                if (!granted) {
+                    // 用户拒绝了通知权限，静默降级即可，不做额外提示
+                    // 通知调度仍会执行，只是通知不会显示
                 }
             }
         );
@@ -424,18 +435,27 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
                 }
                 // 淡入显示
                 if (bannerFinalPayment.getVisibility() != View.VISIBLE) {
+                    bannerFinalPayment.setAlpha(0f);
+                    bannerFinalPayment.setScaleX(0.95f);
+                    bannerFinalPayment.setScaleY(0.95f);
                     bannerFinalPayment.setVisibility(View.VISIBLE);
                     bannerFinalPayment.animate()
                             .alpha(1f)
+                            .scaleX(1f)
+                            .scaleY(1f)
                             .setDuration(300)
+                            .setInterpolator(new android.view.animation.DecelerateInterpolator(1.5f))
                             .start();
                 }
                 // 自动隐藏8秒后淡出
                 bannerFinalPayment.postDelayed(() -> {
                     if (bannerFinalPayment.getVisibility() == View.VISIBLE) {
-                        bannerFinalPayment.animate()
-                                .alpha(0f)
-                                .setDuration(300)
+                                bannerFinalPayment.animate()
+                                        .alpha(0f)
+                                        .scaleX(0.95f)
+                                        .scaleY(0.95f)
+                                        .setDuration(200)
+                                        .setInterpolator(new android.view.animation.AccelerateInterpolator(1.5f))
                                 .withEndAction(() -> {
                                     bannerFinalPayment.setVisibility(View.GONE);
                                     viewModel.markBannerAsActioned();
@@ -449,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
             }
 
             // 点击浮条跳转到统计中心
-            bannerFinalPayment.setOnClickListener(v -> navigateToStats());
+            bannerFinalPayment.setOnClickListener(v -> onProfileNavigateToStats());
 
             // 关闭按钮：点击隐藏浮条
             View ivBannerClose = bannerFinalPayment.findViewById(R.id.ivBannerClose);
@@ -457,7 +477,10 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
                 ivBannerClose.setOnClickListener(v -> {
                     bannerFinalPayment.animate()
                             .alpha(0f)
+                            .scaleX(0.95f)
+                            .scaleY(0.95f)
                             .setDuration(200)
+                            .setInterpolator(new android.view.animation.AccelerateInterpolator(1.5f))
                             .withEndAction(() -> {
                                 bannerFinalPayment.setVisibility(View.GONE);
                                 viewModel.markBannerAsActioned();
@@ -567,12 +590,24 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     }
 
     private void hideAllPages() {
+        android.view.ViewGroup root = findViewById(android.R.id.content);
+        if (root != null) {
+            android.transition.Transition transition = new android.transition.Fade();
+            transition.setDuration(200);
+            android.transition.TransitionManager.beginDelayedTransition(root, transition);
+        }
         navigationManager.hideAllPages();
         findViewById(R.id.sub_page_container).setVisibility(View.GONE);
     }
 
     /** Restore main fragment container and bottom nav after returning from sub-pages */
     private void restoreMainContent() {
+        android.view.ViewGroup root = findViewById(android.R.id.content);
+        if (root != null) {
+            android.transition.Transition transition = new android.transition.Fade();
+            transition.setDuration(200);
+            android.transition.TransitionManager.beginDelayedTransition(root, transition);
+        }
         findViewById(R.id.main_content_container).setVisibility(View.VISIBLE);
         bottomNavigation.setVisibility(View.VISIBLE);
     }
@@ -1063,11 +1098,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
                     filtered.add(item);
                 }
             }
-            // 瞬间硬切换：先关闭动画，提交数据后恢复，避免跨柜子切换时的晃动
-            rvDressItems.setItemAnimator(null);
-            dressItemAdapter.submitList(filtered, () -> {
-                rvDressItems.setItemAnimator(new androidx.recyclerview.widget.DefaultItemAnimator());
-            });
+            // 提交数据后恢复
+            dressItemAdapter.submitList(filtered);
         });
 
         ImageView btnSearchIcon = page.findViewById(R.id.btnSearchIcon);
@@ -1109,65 +1141,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         hideDeletedCategoryChips();
 
         btnAddDress.setOnClickListener(v -> navigateToAddDress());
-
-        // 页面左右滑动切换状态筛选
-        int[] chipIds = {
-            R.id.chipAll, R.id.chipDaiQiang, R.id.chipFuYixiang,
-            R.id.chipFuDingjin, R.id.chipBuWeikuan, R.id.chipDaiFahuo, R.id.chipDaoShou
-        };
-        HorizontalScrollView hsvChips = (HorizontalScrollView) chipGroup.getParent();
-        GestureDetector chipGesture = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            private static final int SWIPE_THRESHOLD = 50;
-            private static final int SWIPE_VELOCITY = 100;
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                if (e1 == null || e2 == null) return false;
-                float diffX = e2.getX() - e1.getX();
-                float diffY = e2.getY() - e1.getY();
-                // 只处理水平滑动（水平位移 > 垂直位移）
-                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY) {
-                    int currentIdx = getCurrentChipIndex();
-                    if (diffX < 0 && currentIdx < chipIds.length - 1) {
-                        chipGroup.check(chipIds[currentIdx + 1]);
-                        scrollToSelectedChip(chipIds[currentIdx + 1]);
-                    } else if (diffX > 0 && currentIdx > 0) {
-                        chipGroup.check(chipIds[currentIdx - 1]);
-                        scrollToSelectedChip(chipIds[currentIdx - 1]);
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            private int getCurrentChipIndex() {
-                int checkedId = chipGroup.getCheckedChipId();
-                for (int i = 0; i < chipIds.length; i++) {
-                    if (chipIds[i] == checkedId) return i;
-                }
-                return 0;
-            }
-
-            private void scrollToSelectedChip(int chipId) {
-                View chip = page.findViewById(chipId);
-                if (chip != null) {
-                    hsvChips.post(() -> hsvChips.smoothScrollTo(
-                        chip.getLeft() - hsvChips.getWidth() / 2 + chip.getWidth() / 2, 0));
-                }
-            }
-        });
-        page.setOnTouchListener((v, event) -> chipGesture.onTouchEvent(event));
-        rvDressItems.addOnItemTouchListener(new androidx.recyclerview.widget.RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                chipGesture.onTouchEvent(e);
-                return false;
-            }
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
-        });
     }
 
     private void initAddDressPage(View page) {
@@ -1201,6 +1174,22 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         layoutDepositAdd = page.findViewById(R.id.layoutDepositAdd);
         etDepositAdd = page.findViewById(R.id.etDepositAdd);
         btnSaveAddDress = page.findViewById(R.id.btnSaveAddDress);
+
+        // Shipping fee focus behavior: default "包邮" (Free Shipping), on focus become number input
+        etShippingFeeAdd.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                if (DEFAULT_SHIPPING.equals(etShippingFeeAdd.getText().toString().trim())) {
+                    etShippingFeeAdd.setText("");
+                }
+                etShippingFeeAdd.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            } else {
+                if (android.text.TextUtils.isEmpty(etShippingFeeAdd.getText().toString().trim())) {
+                    etShippingFeeAdd.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+                    etShippingFeeAdd.setText(DEFAULT_SHIPPING);
+                }
+            }
+        });
+
 
         // Status checkbox -> show/hide per-status date fields
         cbDaiQiang.setOnCheckedChangeListener((btn, checked) -> layoutDaiqiangDate.setVisibility(checked ? View.VISIBLE : View.GONE));
@@ -1327,9 +1316,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         dialogManager.showTotalCostDialog(totalCost, new com.cy.loxia.ui.DialogCallbacks.OnConfirm() {
             @Override
             public void onConfirm() {
-                HomeFragment frag = (HomeFragment) getSupportFragmentManager().findFragmentByTag("home");
-                Double c = viewModel.getTotalCost().getValue();
-                if (frag != null) frag.setTotalCostRevealed(c != null ? c : 0.0);
+                viewModel.setTotalCostHidden(false);
             }
         });
     }
@@ -1511,9 +1498,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         if (tvDetailTitle == null) return;
         tvDetailTitle.setText(currentWardrobe.getName() + " 的裙子");
 
-        // ⚡ 同步秒空：拉取数据前，关闭动画并清空数据，彻底切断旧数据残影
+        // ⚡ 异步拉取数据前，清空数据，切断旧数据残影
         if (rvDressItems != null && dressItemAdapter != null) {
-            rvDressItems.setItemAnimator(null);
             dressItemAdapter.submitList(null);
         }
 
@@ -1586,6 +1572,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         double deposit;
         try {
             earnestMoney = earnestText.isEmpty() ? 0.0 : Double.parseDouble(earnestText);
+            String depositText = etDepositAdd.getText() == null ? "" : etDepositAdd.getText().toString().trim();
+            deposit = depositText.isEmpty() ? 0.0 : Double.parseDouble(depositText);
+
             if (isFull) {
                 if (!fullPaymentText.isEmpty()) {
                     fullPaymentAmount = Double.parseDouble(fullPaymentText);
@@ -1595,10 +1584,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
                 if (!tailPaymentText.isEmpty()) {
                     tailPayment = Double.parseDouble(tailPaymentText);
                 }
-                price = (earnestMoney + tailPayment) > 0 ? earnestMoney + tailPayment : 0;
+                double nonFullTotal = earnestMoney + deposit + tailPayment;
+                price = nonFullTotal > 0 ? nonFullTotal : 0;
             }
-            String depositText = etDepositAdd.getText() == null ? "" : etDepositAdd.getText().toString().trim();
-            deposit = depositText.isEmpty() ? 0.0 : Double.parseDouble(depositText);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "金额格式不正确，请检查输入", Toast.LENGTH_SHORT).show();
             return;
@@ -1881,7 +1869,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         if (Build.VERSION.SDK_INT >= 33) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
         }
     }
@@ -2116,20 +2104,35 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     }
 
     private void showPage(int itemId) {
+        androidx.fragment.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        
+        androidx.fragment.app.Fragment home = getSupportFragmentManager().findFragmentByTag("home");
+        androidx.fragment.app.Fragment overview = getSupportFragmentManager().findFragmentByTag("overview");
+        androidx.fragment.app.Fragment profile = getSupportFragmentManager().findFragmentByTag("profile");
+        
+        if (home != null) transaction.hide(home);
+        if (overview != null) transaction.hide(overview);
+        if (profile != null) transaction.hide(profile);
+        
         androidx.fragment.app.Fragment target;
         if (itemId == R.id.nav_detail) {
             target = findOrCreateFragment("home", HomeFragment::new);
+            if (!target.isAdded()) transaction.add(R.id.main_content_container, target, "home");
+            transaction.show(target);
             currentMainNavId = R.id.nav_detail;
         } else if (itemId == R.id.nav_overview) {
             target = findOrCreateFragment("overview", OverviewFragment::new);
+            if (!target.isAdded()) transaction.add(R.id.main_content_container, target, "overview");
+            transaction.show(target);
             currentMainNavId = R.id.nav_overview;
         } else {
             target = findOrCreateFragment("profile", ProfileFragment::new);
+            if (!target.isAdded()) transaction.add(R.id.main_content_container, target, "profile");
+            transaction.show(target);
             currentMainNavId = R.id.nav_profile;
         }
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.main_content_container, target)
-            .commit();
+        
+        transaction.commit();
         updateNavSelection();
     }
 
@@ -2378,6 +2381,41 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         }
     }
 
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (ev.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                hideSoftInput(v.getWindowToken());
+                v.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private boolean isShouldHideInput(View v, android.view.MotionEvent event) {
+        if (v != null && (v instanceof android.widget.EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void hideSoftInput(android.os.IBinder token) {
+        if (token != null) {
+            android.view.inputmethod.InputMethodManager im = (android.view.inputmethod.InputMethodManager) getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+            if (im != null) {
+                im.hideSoftInputFromWindow(token, android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {

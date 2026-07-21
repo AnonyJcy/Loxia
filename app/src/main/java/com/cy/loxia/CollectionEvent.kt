@@ -47,14 +47,14 @@ data class CollectionEvent(
  * 事件类型枚举
  */
 enum class EventType(val label: String, val icon: String) {
-    DAI_QIANG("待抢", "🔥"),
-    YI_XIANG("付意向", "💜"),
-    DING_JIN("付定金", "💜"),
-    BU_WEI_KUAN("补尾款", "💰"),
-    EXPECTED_SHIPMENT("预计发货", "📦"),
-    SHIPMENT("发货", "🚚"),
-    RECEIVED("确认收货", "✅"),
-    CUSTOM("自定义", "📝");
+    DAI_QIANG("待抢", "抢"),
+    YI_XIANG("付意向", "意"),
+    DING_JIN("付定金", "定"),
+    BU_WEI_KUAN("补尾款", "尾"),
+    EXPECTED_SHIPMENT("预计发货", "预"),
+    SHIPMENT("发货", "发"),
+    RECEIVED("确认收货", "收"),
+    CUSTOM("自定义", "自");
 
     companion object {
         /**

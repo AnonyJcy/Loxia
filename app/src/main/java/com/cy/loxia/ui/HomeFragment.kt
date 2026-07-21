@@ -73,12 +73,14 @@ class HomeFragment : Fragment() {
             host?.onAddWardrobeClick()
         }
 
-        // Total cost click — always allow; the observer handles display state
+        // Total cost click
         val costSection = tvTotalCost?.parent as? View
         costSection?.isClickable = true
         costSection?.isFocusable = true
         costSection?.setOnClickListener {
-            host?.onTotalCostClick()
+            if (viewModel.isTotalCostHidden.value != false) {
+                host?.onTotalCostClick()
+            }
         }
 
         // Banner close
@@ -149,29 +151,34 @@ class HomeFragment : Fragment() {
 
     private fun showBanner() {
         bannerFinalPayment?.let { banner ->
-            banner.alpha = 1f  // 重置 alpha（XML 初始值为 0）
+            banner.alpha = 0f
+            banner.scaleX = 0.95f
+            banner.scaleY = 0.95f
             banner.visibility = View.VISIBLE
-            val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 300 }
-            banner.startAnimation(fadeIn)
+            banner.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(300)
+                .setInterpolator(android.view.animation.DecelerateInterpolator(1.5f))
+                .start()
         }
     }
 
     private fun hideBanner() {
         bannerFinalPayment?.let { banner ->
-            // 如果 banner 当前不可见（如首次加载），直接 GONE，无需动画
             if (banner.visibility != View.VISIBLE) {
                 banner.visibility = View.GONE
                 return
             }
-            val fadeOut = AlphaAnimation(1f, 0f).apply {
-                duration = 200
-                setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(a: Animation?) {}
-                    override fun onAnimationRepeat(a: Animation?) {}
-                    override fun onAnimationEnd(a: Animation?) { banner.visibility = View.GONE }
-                })
-            }
-            banner.startAnimation(fadeOut)
+            banner.animate()
+                .alpha(0f)
+                .scaleX(0.95f)
+                .scaleY(0.95f)
+                .setDuration(200)
+                .setInterpolator(android.view.animation.AccelerateInterpolator(1.5f))
+                .withEndAction { banner.visibility = View.GONE }
+                .start()
         }
     }
 }

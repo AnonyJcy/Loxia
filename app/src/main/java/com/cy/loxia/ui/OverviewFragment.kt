@@ -44,7 +44,6 @@ class OverviewFragment : Fragment() {
         overviewAdapter?.setOnDressItemClickListener { item -> host?.onDressItemClick(item) }
         rvOverview?.apply {
             layoutManager = GridLayoutManager(context, 3)
-            isNestedScrollingEnabled = false
             adapter = overviewAdapter
             setItemViewCacheSize(20)
         }

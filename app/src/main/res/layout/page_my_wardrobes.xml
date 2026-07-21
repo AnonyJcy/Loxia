@@ -37,7 +37,7 @@
             android:layout_marginBottom="8dp"
             android:visibility="gone"
             android:alpha="0"
-            app:cardBackgroundColor="@color/pink_primary"
+            app:cardBackgroundColor="@color/banner_bg"
             app:cardCornerRadius="@dimen/card_radius"
             app:cardElevation="2dp">
 
@@ -171,7 +171,9 @@
                 app:cornerRadius="24dp"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconSize="16dp"
-                app:backgroundTint="@color/pink_primary" />
+                app:backgroundTint="@color/pink_primary"
+                android:textColor="@android:color/white"
+                app:iconTint="@android:color/white" />
         </LinearLayout>
 
         <!-- 衣柜列表 -->

@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:animateLayoutChanges="true">
 
         <!-- 1. 上传主图 -->
         <TextView
@@ -30,13 +31,16 @@
             android:id="@+id/cardMainImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:cardCornerRadius="@dimen/card_radius"
-            
-            app:strokeWidth="0dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/card_border">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
 
                 <ImageView
                     android:id="@+id/ivMainImagePreview"
@@ -81,7 +85,7 @@
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/spacing_base"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp" />
 
         <LinearLayout
@@ -90,66 +94,105 @@
             android:orientation="vertical"
             android:animateLayoutChanges="true">
 
-            <LinearLayout
+            <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="6dp">
 
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbDaiQiang"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_daiqiang" />
 
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbFuYixiang"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_fuyixiang" />
 
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbFuDingjin"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_fudingjin" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbBuWeikuan"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_buweikuan" />
 
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbDaiFahuo"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_daifahuo" />
 
-                <com.google.android.material.checkbox.MaterialCheckBox
+                <com.google.android.material.chip.Chip
                     android:id="@+id/cbDaoShou"
+                    style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:checkedIconVisible="false"
+                    app:ensureMinTouchTargetSize="false"
+                    app:chipBackgroundColor="@color/selector_chip_bg"
+                    android:textColor="@color/selector_chip_text"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/selector_chip_stroke"
                     android:text="@string/status_daoshou" />
-            </LinearLayout>
+            </com.google.android.material.chip.ChipGroup>
 
             <!-- 待抢时间 -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutDaiqiangDate"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_field_gap"
                 android:hint="@string/hint_daiqiang_time"
                 android:visibility="gone"
-                app:boxBackgroundColor="@color/white">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDaiqiangDate"
@@ -163,13 +206,17 @@
             <!-- 付意向时间 -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutYixiangDate"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_field_gap"
                 android:hint="@string/hint_yixiang_deadline"
                 android:visibility="gone"
-                app:boxBackgroundColor="@color/white">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etYixiangDate"
@@ -183,13 +230,17 @@
             <!-- 付定金时间 -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutDingjinDate"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_field_gap"
                 android:hint="@string/hint_dingjin_time"
                 android:visibility="gone"
-                app:boxBackgroundColor="@color/white">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDingjinDate"
@@ -203,13 +254,17 @@
             <!-- 补尾款时间 -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutBuweikuanDate"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_field_gap"
                 android:hint="@string/hint_buweikuan_time"
                 android:visibility="gone"
-                app:boxBackgroundColor="@color/white">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etBuweikuanDate"
@@ -223,12 +278,16 @@
 
         <!-- 3. 衣服名称 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_name"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNameAdd"
@@ -238,12 +297,16 @@
 
         <!-- 4. 店铺/品牌 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_store"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etStoreAdd"
@@ -253,12 +316,16 @@
 
         <!-- 5. 购买渠道 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_channel"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etChannelAdd"
@@ -271,12 +338,16 @@
 
         <!-- 6. 购入时间 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_date"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etBuyDateAdd"
@@ -289,12 +360,16 @@
 
         <!-- 7. 运费 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/label_shipping_fee"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etShippingFeeAdd"
@@ -305,12 +380,16 @@
 
         <!-- 8. 意向金 -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_earnest_money"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEarnestMoneyAdd"
@@ -320,37 +399,28 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- 9. 全款勾选 -->
-        <LinearLayout
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/cbFullPayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <CheckBox
-                android:id="@+id/cbFullPayment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/pink_primary" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/label_full_payment_option"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_body" />
-        </LinearLayout>
+            android:layout_marginTop="24dp"
+            android:text="@string/label_full_payment_option"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_body" />
 
         <!-- 10. 定金 -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutDepositAdd"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/label_deposit"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etDepositAdd"
@@ -362,12 +432,16 @@
         <!-- 11. 尾款 -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutTailPayment"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_tail_payment"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTailPaymentAdd"
@@ -379,13 +453,17 @@
         <!-- 12. 全款金额 -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutFullPaymentAmount"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.LoXia.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_field_gap"
             android:hint="@string/hint_full_payment_amount"
             android:visibility="gone"
-            app:boxBackgroundColor="@color/white">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFullPaymentAmountAdd"
@@ -408,3 +486,6 @@
 
     </LinearLayout>
 </ScrollView>
+
+
+

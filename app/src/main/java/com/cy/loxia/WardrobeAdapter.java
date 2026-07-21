@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class WardrobeAdapter extends ListAdapter<Wardrobe, WardrobeAdapter.ViewHolder> {
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final OnWardrobeClickListener listener;
     private OnWardrobeLongPressListener longPressListener;
     private Map<String, List<String>> previewImages = new HashMap<>();
@@ -34,6 +38,7 @@ public class WardrobeAdapter extends ListAdapter<Wardrobe, WardrobeAdapter.ViewH
     public WardrobeAdapter(OnWardrobeClickListener listener) {
         super(DIFF_CALLBACK);
         this.listener = listener;
+        setStateRestorationPolicy(StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
     public void setLongPressListener(OnWardrobeLongPressListener longPressListener) {
@@ -64,8 +69,10 @@ public class WardrobeAdapter extends ListAdapter<Wardrobe, WardrobeAdapter.ViewH
         String dateStr = "";
         long ts = wardrobe.getUpdatedAt();
         if (ts > 0) {
-            dateStr = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                    .format(new java.util.Date(ts));
+            dateStr = Instant.ofEpochMilli(ts)
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+                    .format(DATE_FORMAT);
         }
         holder.tvCount.setText(String.format("%d 件 · 最近更新 %s", wardrobe.getCount(), dateStr.isEmpty() ? "-" : dateStr));
         holder.tvBadge.setText("查看详情");

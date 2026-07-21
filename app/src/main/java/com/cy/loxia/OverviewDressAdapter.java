@@ -22,6 +22,7 @@ public class OverviewDressAdapter extends ListAdapter<DressItem, OverviewDressAd
 
     public OverviewDressAdapter() {
         super(DIFF_CALLBACK);
+        setStateRestorationPolicy(StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
     public void setOnDressItemClickListener(OnDressItemClickListener listener) {

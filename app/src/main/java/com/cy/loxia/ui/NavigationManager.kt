@@ -48,6 +48,11 @@ class NavigationManager(
     }
 
     fun showPage(pageName: String, title: String, showBack: Boolean = false, showBottomNav: Boolean = true) {
+        val rootView = containerView.rootView as? android.view.ViewGroup
+        if (rootView != null) {
+            val transition = android.transition.Fade().apply { duration = 200 }
+            android.transition.TransitionManager.beginDelayedTransition(rootView, transition)
+        }
         hideAllPages()
         resolvePage(pageName)?.visibility = View.VISIBLE
         containerView.visibility = View.VISIBLE
@@ -73,6 +78,12 @@ class NavigationManager(
             val previousPage = pageStack.removeAt(pageStack.size - 1)
             val title = getPageTitle(previousPage)
             val showBottomNav = isMainPage(previousPage)
+
+            val rootView = containerView.rootView as? android.view.ViewGroup
+            if (rootView != null) {
+                val transition = android.transition.Fade().apply { duration = 200 }
+                android.transition.TransitionManager.beginDelayedTransition(rootView, transition)
+            }
 
             hideAllPages()
             if (isMainPage(previousPage)) {

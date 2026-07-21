@@ -1,7 +1,6 @@
 package com.cy.loxia
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 /**
@@ -10,6 +9,6 @@ import kotlinx.coroutines.SupervisorJob
 object AppScopeProvider {
     @JvmStatic
     fun createApplicationScope(): CoroutineScope {
-        return CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        return CoroutineScope(SupervisorJob())
     }
 }

@@ -84,13 +84,13 @@
                     android:id="@+id/tvWardrobeBadge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/pink_secondary"
+                    android:backgroundTint="@color/pink_primary"
                     android:paddingStart="@dimen/spacing_sm"
                     android:paddingTop="@dimen/spacing_xs"
                     android:paddingEnd="@dimen/spacing_sm"
                     android:paddingBottom="@dimen/spacing_xs"
                     android:text="查看详情"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/text_caption" />
             </LinearLayout>
         </LinearLayout>

@@ -28,6 +28,7 @@ public class DressItemAdapter extends ListAdapter<DressItem, DressItemAdapter.Vi
 
     public DressItemAdapter() {
         super(DIFF_CALLBACK);
+        setStateRestorationPolicy(StateRestorationPolicy.PREVENT_WHEN_EMPTY);
     }
 
     public void setOnDressItemClickListener(OnDressItemClickListener listener) {
@@ -82,6 +83,10 @@ public class DressItemAdapter extends ListAdapter<DressItem, DressItemAdapter.Vi
         }
     }
 
+    private static boolean priceEquals(double a, double b) {
+        return Double.compare(a, b) == 0;
+    }
+
     private static final DiffUtil.ItemCallback<DressItem> DIFF_CALLBACK =
         new DiffUtil.ItemCallback<DressItem>() {
             @Override
@@ -92,7 +97,7 @@ public class DressItemAdapter extends ListAdapter<DressItem, DressItemAdapter.Vi
             @Override
             public boolean areContentsTheSame(@NonNull DressItem oldItem, @NonNull DressItem newItem) {
                 return Objects.equals(oldItem.getName(), newItem.getName())
-                    && Double.compare(oldItem.getPrice(), newItem.getPrice()) == 0
+                    && priceEquals(oldItem.getPrice(), newItem.getPrice())
                     && Objects.equals(oldItem.getBuyDate(), newItem.getBuyDate())
                     && Objects.equals(oldItem.getStore(), newItem.getStore())
                     && oldItem.isPinned() == newItem.isPinned()
@@ -100,12 +105,12 @@ public class DressItemAdapter extends ListAdapter<DressItem, DressItemAdapter.Vi
                     && Objects.equals(oldItem.getStatus(), newItem.getStatus())
                     && Objects.equals(oldItem.getImageUri(), newItem.getImageUri())
                     && Objects.equals(oldItem.getChannel(), newItem.getChannel())
-                    && Double.compare(oldItem.getEarnestMoney(), newItem.getEarnestMoney()) == 0
+                    && priceEquals(oldItem.getEarnestMoney(), newItem.getEarnestMoney())
                     && oldItem.isFullPayment() == newItem.isFullPayment()
-                    && Double.compare(oldItem.getFullPaymentAmount(), newItem.getFullPaymentAmount()) == 0
-                    && Double.compare(oldItem.getTailPayment(), newItem.getTailPayment()) == 0
+                    && priceEquals(oldItem.getFullPaymentAmount(), newItem.getFullPaymentAmount())
+                    && priceEquals(oldItem.getTailPayment(), newItem.getTailPayment())
                     && Objects.equals(oldItem.getShippingFee(), newItem.getShippingFee())
-                    && Double.compare(oldItem.getDeposit(), newItem.getDeposit()) == 0;
+                    && priceEquals(oldItem.getDeposit(), newItem.getDeposit());
             }
         };
 }

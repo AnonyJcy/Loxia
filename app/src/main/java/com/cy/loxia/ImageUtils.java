@@ -28,6 +28,11 @@ public class ImageUtils {
         @Override protected int sizeOf(String key, Bitmap bitmap) {
             return bitmap.getByteCount() / 1024;
         }
+        @Override protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+            if (evicted && oldValue != null && !oldValue.isRecycled()) {
+                oldValue.recycle();
+            }
+        }
     };
 
     // 磁盘缓存目录
