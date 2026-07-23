@@ -106,15 +106,26 @@ public class ImageUtils {
 
             Bitmap finalBitmap = bitmap;
             mainHandler.post(() -> {
-                // 检查 ImageView 是否仍然 attached，防止 Activity 销毁后更新 View
-                if (!imageView.isAttachedToWindow()) return;
+                // 移除 isAttachedToWindow 检查，因为 RecyclerView onBindViewHolder 时可能还未 attach
                 // 检查 ImageView 的 tag 是否仍然匹配，防止错图
                 Object tag = imageView.getTag(TAG_KEY_LOADING_PATH);
                 if (tag == null || !tag.equals(path)) return;
 
                 if (finalBitmap != null) {
                     bitmapCache.put(path, finalBitmap);
-                    imageView.setImageBitmap(finalBitmap);
+                    android.graphics.drawable.Drawable oldDrawable = imageView.getDrawable();
+                    if (oldDrawable != null) {
+                        android.graphics.drawable.BitmapDrawable newDrawable =
+                                new android.graphics.drawable.BitmapDrawable(imageView.getResources(), finalBitmap);
+                        android.graphics.drawable.TransitionDrawable td =
+                                new android.graphics.drawable.TransitionDrawable(
+                                        new android.graphics.drawable.Drawable[]{oldDrawable, newDrawable});
+                        td.setCrossFadeEnabled(true);
+                        imageView.setImageDrawable(td);
+                        td.startTransition(150);
+                    } else {
+                        imageView.setImageBitmap(finalBitmap);
+                    }
                 } else {
                     imageView.setImageResource(placeholderRes);
                 }

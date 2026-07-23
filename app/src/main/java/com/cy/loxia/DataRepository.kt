@@ -87,12 +87,31 @@ class DataRepository private constructor(
                 migrateDataToRoomIfNeeded()
                 ensureDefaultData()
                 fixWardrobeUpdatedAt()  // 修复旧数据的 updatedAt
+                fixWardrobeCounts()     // 修复可能因移动裙子导致的计数错误
                 readyDeferred.complete(Unit)
             } catch (e: Exception) {
                 Log.e(TAG, "Initialization failed", e)
                 _errorEvent.postValue("数据初始化失败，请重启应用重试")
                 readyDeferred.complete(Unit)
             }
+        }
+    }
+
+    /**
+     * 修复衣柜的计数值（如果因为移动裙子等操作导致不同步）
+     */
+    private suspend fun fixWardrobeCounts() {
+        try {
+            val wardrobes = dao.getAllWardrobes()
+            for (wardrobe in wardrobes) {
+                val realCount = dao.getDressItemCountByWardrobeId(wardrobe.id)
+                if (wardrobe.count != realCount) {
+                    dao.updateWardrobe(wardrobe.copy(count = realCount))
+                    Log.d(TAG, "Fixed count for wardrobe: ${wardrobe.name} to $realCount")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fix wardrobe counts", e)
         }
     }
 
@@ -263,7 +282,11 @@ class DataRepository private constructor(
     suspend fun updateDressItem(updated: DressItem) {
         awaitReady()
         try {
+            val oldItem = dao.findDressItemById(updated.id)
             dao.updateDressItem(updated.toEntity())
+            if (oldItem != null && oldItem.wardrobeId != updated.wardrobeId) {
+                updateWardrobeCount(oldItem.wardrobeId)
+            }
             updateWardrobeCount(updated.wardrobeId)
             Log.d(TAG, "Updated dress item: ${updated.name}")
         } catch (e: Exception) {
@@ -451,6 +474,10 @@ class DataRepository private constructor(
         awaitReady()
         try {
             dao.insertDressItems(items.map { it.toEntity() })
+            val wardrobeIds = items.map { it.wardrobeId }.toSet()
+            for (wId in wardrobeIds) {
+                updateWardrobeCount(wId)
+            }
             Log.d(TAG, "Updated all dress items: ${items.size}")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update all dress items", e)

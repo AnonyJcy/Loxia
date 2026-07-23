@@ -18,14 +18,7 @@ local.properties
 # macOS
 .DS_Store
 
-# MCP config (contains API keys)
-.mcp.json
 
-# AI agent configs
-.agents/
-.claude/
-.codex/
-.trae/
 
 # Logs
 /log/
@@ -36,11 +29,8 @@ local.properties
 /waibuskillzip/
 /picture/
 /zhaopian/
-/mcp/
 
-# Project docs (optional - remove these lines if you want to keep them)
-AGENTS.md
-CLAUDE.md
+
 
 # Gradle wrapper (keep gradlew scripts, ignore jar if needed)
 # gradle/wrapper/gradle-wrapper.jar

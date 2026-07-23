@@ -38,4 +38,3 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-

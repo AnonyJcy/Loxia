@@ -51,7 +51,15 @@ class OverviewFragment : Fragment() {
         // ViewModel 已转换为 Domain Model，直接使用
         viewModel.filteredDressItems.observe(viewLifecycleOwner) { items ->
             if (items == null) return@observe
-            overviewAdapter?.submitList(items)
+            val isInitialLoad = (overviewAdapter?.itemCount ?: 0) == 0 && items.isNotEmpty()
+            if (isInitialLoad) {
+                rvOverview?.layoutAnimation = android.view.animation.AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_slide_up)
+            }
+            overviewAdapter?.submitList(items) {
+                if (isInitialLoad) {
+                    rvOverview?.scheduleLayoutAnimation()
+                }
+            }
         }
     }
 

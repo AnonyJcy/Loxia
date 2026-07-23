@@ -85,9 +85,9 @@ public class AlarmScheduler {
             String statusKey, String statusLabel, LocalDate dueDate, int daysBefore,
             int hour, int minute, String title, int soundMode, boolean silentMode, boolean showBadge) {
         LocalDate triggerDate = dueDate.minusDays(daysBefore);
-        if (triggerDate.isBefore(LocalDate.now())) return;
-
         LocalDateTime triggerTime = LocalDateTime.of(triggerDate, LocalTime.of(hour, minute));
+        if (triggerTime.isBefore(LocalDateTime.now())) return;
+
         long triggerMillis = triggerTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
         Intent intent = new Intent(context, ReminderReceiver.class);

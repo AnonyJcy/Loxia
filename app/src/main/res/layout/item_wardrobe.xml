@@ -31,6 +31,18 @@
                 android:src="@drawable/wardrobe_default"
                 android:padding="12dp"
                 android:contentDescription="默认衣柜图标" />
+
+            <!-- Statically defined image views for 120fps scrolling (toggling INVISIBLE does not trigger layout pass) -->
+            <ImageView android:id="@+id/ivFull" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+            
+            <ImageView android:id="@+id/ivLeftHalf" android:layout_width="41dp" android:layout_height="84dp" android:layout_gravity="start" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+            <ImageView android:id="@+id/ivRightHalf" android:layout_width="41dp" android:layout_height="84dp" android:layout_gravity="end" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+
+            <ImageView android:id="@+id/ivTopLeftQ" android:layout_width="41dp" android:layout_height="41dp" android:layout_gravity="top|start" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+            <ImageView android:id="@+id/ivTopRightQ" android:layout_width="41dp" android:layout_height="41dp" android:layout_gravity="top|end" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+            <ImageView android:id="@+id/ivBotLeftQ" android:layout_width="41dp" android:layout_height="41dp" android:layout_gravity="bottom|start" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+            <ImageView android:id="@+id/ivBotRightQ" android:layout_width="41dp" android:layout_height="41dp" android:layout_gravity="bottom|end" android:scaleType="centerCrop" android:background="@drawable/rounded_image_bg" android:clipToOutline="true" android:visibility="invisible" />
+
         </FrameLayout>
 
         <LinearLayout

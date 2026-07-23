@@ -71,6 +71,15 @@ class NavigationManager(
             pageStack.add(currentPage)
             currentPage = pageName
         }
+
+        if (pageName == "page_detail") {
+            if (topAppBar?.menu?.findItem(R.id.action_search) == null) {
+                topAppBar?.inflateMenu(R.menu.menu_search)
+            }
+            topAppBar?.menu?.findItem(R.id.action_search)?.isVisible = true
+        } else {
+            topAppBar?.menu?.findItem(R.id.action_search)?.isVisible = false
+        }
     }
 
     fun navigateBack(): Boolean {
@@ -95,6 +104,15 @@ class NavigationManager(
             bottomNavigationView.visibility = if (showBottomNav) View.VISIBLE else View.GONE
             topAppBar?.title = title
             topAppBar?.navigationIcon = null
+
+            if (previousPage == "page_detail") {
+                if (topAppBar?.menu?.findItem(R.id.action_search) == null) {
+                    topAppBar?.inflateMenu(R.menu.menu_search)
+                }
+                topAppBar?.menu?.findItem(R.id.action_search)?.isVisible = true
+            } else {
+                topAppBar?.menu?.findItem(R.id.action_search)?.isVisible = false
+            }
 
             currentPage = previousPage
             return true

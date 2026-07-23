@@ -105,67 +105,53 @@ public class WardrobeAdapter extends ListAdapter<Wardrobe, WardrobeAdapter.ViewH
     }
 
     private void bindPreviewImages(ViewHolder holder, List<String> images) {
-        // Hide all preview images first
-        for (ImageView iv : holder.previewImageViews) {
-            iv.setVisibility(View.GONE);
-        }
+        // Reset all to invisible
+        holder.ivFull.setVisibility(View.INVISIBLE);
+        holder.ivLeftHalf.setVisibility(View.INVISIBLE);
+        holder.ivRightHalf.setVisibility(View.INVISIBLE);
+        holder.ivTopLeftQ.setVisibility(View.INVISIBLE);
+        holder.ivTopRightQ.setVisibility(View.INVISIBLE);
+        holder.ivBotLeftQ.setVisibility(View.INVISIBLE);
+        holder.ivBotRightQ.setVisibility(View.INVISIBLE);
+
         holder.ivPreviewDefault.setVisibility(View.VISIBLE);
 
         if (images == null || images.isEmpty()) return;
 
-        holder.ivPreviewDefault.setVisibility(View.GONE);
+        holder.ivPreviewDefault.setVisibility(View.INVISIBLE);
         int count = Math.min(images.size(), 4);
 
-        float density = holder.itemView.getContext().getResources().getDisplayMetrics().density;
-        int containerSize = (int) (84 * density); // matches item_wardrobe.xml previewContainer 84dp
-        int gap = (int) (2 * density);
-        int half = (containerSize - gap) / 2;
-
         if (count == 1) {
-            layoutImage(holder.previewImageViews[0], 0, 0, containerSize, containerSize);
-            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(0), holder.previewImageViews[0], R.drawable.bg_image_placeholder);
-            holder.previewImageViews[0].setVisibility(View.VISIBLE);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(0), holder.ivFull, R.drawable.bg_image_placeholder);
+            holder.ivFull.setVisibility(View.VISIBLE);
         } else if (count == 2) {
-            layoutImage(holder.previewImageViews[0], 0, 0, half, containerSize);
-            layoutImage(holder.previewImageViews[1], half + gap, 0, half, containerSize);
-            for (int i = 0; i < 2; i++) {
-                ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(i), holder.previewImageViews[i], R.drawable.bg_image_placeholder);
-                holder.previewImageViews[i].setVisibility(View.VISIBLE);
-            }
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(0), holder.ivLeftHalf, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(1), holder.ivRightHalf, R.drawable.bg_image_placeholder);
+            holder.ivLeftHalf.setVisibility(View.VISIBLE);
+            holder.ivRightHalf.setVisibility(View.VISIBLE);
         } else if (count == 3) {
-            layoutImage(holder.previewImageViews[0], 0, 0, half, containerSize);
-            layoutImage(holder.previewImageViews[1], half + gap, 0, half, half);
-            layoutImage(holder.previewImageViews[2], half + gap, half + gap, half, half);
-            for (int i = 0; i < 3; i++) {
-                ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(i), holder.previewImageViews[i], R.drawable.bg_image_placeholder);
-                holder.previewImageViews[i].setVisibility(View.VISIBLE);
-            }
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(0), holder.ivLeftHalf, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(1), holder.ivTopRightQ, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(2), holder.ivBotRightQ, R.drawable.bg_image_placeholder);
+            holder.ivLeftHalf.setVisibility(View.VISIBLE);
+            holder.ivTopRightQ.setVisibility(View.VISIBLE);
+            holder.ivBotRightQ.setVisibility(View.VISIBLE);
         } else {
-            // 4 images in 2x2 grid
-            layoutImage(holder.previewImageViews[0], 0, 0, half, half);
-            layoutImage(holder.previewImageViews[1], half + gap, 0, half, half);
-            layoutImage(holder.previewImageViews[2], 0, half + gap, half, half);
-            layoutImage(holder.previewImageViews[3], half + gap, half + gap, half, half);
-            for (int i = 0; i < 4; i++) {
-                ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(i), holder.previewImageViews[i], R.drawable.bg_image_placeholder);
-                holder.previewImageViews[i].setVisibility(View.VISIBLE);
-            }
+            // 4 images
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(0), holder.ivTopLeftQ, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(1), holder.ivTopRightQ, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(2), holder.ivBotLeftQ, R.drawable.bg_image_placeholder);
+            ImageUtils.loadIntoView(holder.itemView.getContext(), images.get(3), holder.ivBotRightQ, R.drawable.bg_image_placeholder);
+            holder.ivTopLeftQ.setVisibility(View.VISIBLE);
+            holder.ivTopRightQ.setVisibility(View.VISIBLE);
+            holder.ivBotLeftQ.setVisibility(View.VISIBLE);
+            holder.ivBotRightQ.setVisibility(View.VISIBLE);
         }
     }
 
-    private void layoutImage(ImageView iv, int left, int top, int width, int height) {
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) iv.getLayoutParams();
-        lp.leftMargin = left;
-        lp.topMargin = top;
-        lp.width = width;
-        lp.height = height;
-        iv.setLayoutParams(lp);
-    }
-
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final FrameLayout previewContainer;
         final ImageView ivPreviewDefault;
-        final ImageView[] previewImageViews = new ImageView[4];
+        final ImageView ivFull, ivLeftHalf, ivRightHalf, ivTopLeftQ, ivTopRightQ, ivBotLeftQ, ivBotRightQ;
         final TextView tvName;
         final TextView tvCount;
         final TextView tvBadge;
@@ -173,25 +159,19 @@ public class WardrobeAdapter extends ListAdapter<Wardrobe, WardrobeAdapter.ViewH
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            previewContainer = itemView.findViewById(R.id.previewContainer);
             ivPreviewDefault = itemView.findViewById(R.id.ivPreviewDefault);
+            ivFull = itemView.findViewById(R.id.ivFull);
+            ivLeftHalf = itemView.findViewById(R.id.ivLeftHalf);
+            ivRightHalf = itemView.findViewById(R.id.ivRightHalf);
+            ivTopLeftQ = itemView.findViewById(R.id.ivTopLeftQ);
+            ivTopRightQ = itemView.findViewById(R.id.ivTopRightQ);
+            ivBotLeftQ = itemView.findViewById(R.id.ivBotLeftQ);
+            ivBotRightQ = itemView.findViewById(R.id.ivBotRightQ);
+
             tvName = itemView.findViewById(R.id.tvWardrobeName);
             tvCount = itemView.findViewById(R.id.tvWardrobeCount);
             tvBadge = itemView.findViewById(R.id.tvWardrobeBadge);
             tvDemoBadge = itemView.findViewById(R.id.tvDemoBadge);
-
-            // Pre-create 4 ImageViews for preview grid
-            for (int i = 0; i < 4; i++) {
-                ImageView iv = new ImageView(itemView.getContext());
-                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                iv.setBackgroundResource(R.drawable.rounded_image_bg);
-                iv.setClipToOutline(true);
-                iv.setVisibility(View.GONE);
-                previewContainer.addView(iv, new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT));
-                previewImageViews[i] = iv;
-            }
         }
     }
 

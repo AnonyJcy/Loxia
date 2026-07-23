@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     private RecyclerView rvOverview;
     // Detail page
     private RecyclerView rvDressItems;
-    private TextView tvDetailTitle;
     private TextInputEditText etSearch;
     private View searchContainer;
     private ChipGroup chipGroup;
@@ -185,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     private TextInputEditText etProfileName;
     private TextView tvSloganPreview;
     private Uri pendingAvatarUri;
-    private ActivityResultLauncher<String> avatarPickerLauncher;
+    private ActivityResultLauncher<Intent> avatarPickerLauncher;
 
     // Data import
     private TextInputEditText etImportText;
@@ -233,8 +232,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     // Image pickers
     private Uri pendingWardrobeCover;
     private ImageView dialogCoverPreview;
-    private ActivityResultLauncher<String> wardrobeCoverPickerLauncher;
-    private ActivityResultLauncher<String> mainImagePickerLauncher;
+    private ActivityResultLauncher<Intent> wardrobeCoverPickerLauncher;
+    private ActivityResultLauncher<Intent> mainImagePickerLauncher;
     private ActivityResultLauncher<Intent> cropLauncher;
     private ActivityResultLauncher<String> notificationPermissionLauncher;
     private Uri pendingCropTargetUri;
@@ -277,57 +276,43 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         pendingMainImageUri = null;
 
         wardrobeCoverPickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    pendingCropType = 1;
-                    File cropDest = createCropTempFile();
-                    pendingCropTargetUri = Uri.fromFile(cropDest);
-                    UCrop.Options options = createUCropOptions();
-                    Intent cropIntent = UCrop.of(uri, pendingCropTargetUri)
-                            .withAspectRatio(3, 4)
-                            .withMaxResultSize(768, 1024)
-                            .withOptions(options)
-                            .getIntent(this);
-                    cropLauncher.launch(cropIntent);
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        pendingCropType = 1;
+                        pendingCropTargetUri = uri;
+                        handleCroppedCover();
+                    }
                 }
             }
         );
 
         mainImagePickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    pendingCropType = 2;
-                    File cropDest = createCropTempFile();
-                    pendingCropTargetUri = Uri.fromFile(cropDest);
-                    UCrop.Options options = createUCropOptions();
-                    Intent cropIntent = UCrop.of(uri, pendingCropTargetUri)
-                            .withAspectRatio(3, 4)
-                            .withMaxResultSize(1536, 2048)
-                            .withOptions(options)
-                            .getIntent(this);
-                    cropLauncher.launch(cropIntent);
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        pendingCropType = 2;
+                        pendingCropTargetUri = uri;
+                        handleCroppedMainImage();
+                    }
                 }
             }
         );
 
         avatarPickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    pendingCropType = 0;
-                    File cropDest = createCropTempFile();
-                    pendingCropTargetUri = Uri.fromFile(cropDest);
-                    UCrop.Options options = createUCropOptions();
-                    options.setCircleDimmedLayer(true);
-                    options.setShowCropGrid(false);
-                    Intent cropIntent = UCrop.of(uri, pendingCropTargetUri)
-                            .withAspectRatio(1, 1)
-                            .withMaxResultSize(512, 512)
-                            .withOptions(options)
-                            .getIntent(this);
-                    cropLauncher.launch(cropIntent);
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        pendingCropType = 0;
+                        pendingCropTargetUri = uri;
+                        handleCroppedAvatar();
+                    }
                 }
             }
         );
@@ -345,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         cropLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri resultUri = UCrop.getOutput(result.getData());
                     if (resultUri != null) {
@@ -613,7 +599,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
     }
 
     private void navigateToDetail() {
-        navigationManager.showPage("page_detail", getString(R.string.title_detail), true, false);
+        String title = currentWardrobe != null ? currentWardrobe.getName() : getString(R.string.title_detail);
+        navigationManager.showPage("page_detail", title, true, false);
         if (searchContainer != null) searchContainer.setVisibility(View.GONE);
         if (etSearch != null) etSearch.setText("");
     }
@@ -1066,7 +1053,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
 
     private void initDetailPage(View page) {
         rvDressItems = page.findViewById(R.id.rvDressItems);
-        tvDetailTitle = page.findViewById(R.id.tvDetailTitle);
         etSearch = page.findViewById(R.id.etSearch);
         searchContainer = page.findViewById(R.id.searchContainer);
         chipGroup = page.findViewById(R.id.chipGroup);
@@ -1102,20 +1088,28 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
             dressItemAdapter.submitList(filtered);
         });
 
-        ImageView btnSearchIcon = page.findViewById(R.id.btnSearchIcon);
-        btnSearchIcon.setOnClickListener(v -> {
-            if (searchContainer.getVisibility() == View.VISIBLE) {
-                searchContainer.setVisibility(View.GONE);
-                etSearch.setText("");
-                // 重新触发数据刷新
-                if (currentWardrobe != null) {
-                    viewModel.fetchDressesByWardrobe(currentWardrobe.getId());
+        com.google.android.material.appbar.MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        if (topAppBar != null) {
+            topAppBar.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_search) {
+                    if (searchContainer != null && etSearch != null) {
+                        if (searchContainer.getVisibility() == View.VISIBLE) {
+                            searchContainer.setVisibility(View.GONE);
+                            etSearch.setText("");
+                            // 重新触发数据刷新
+                            if (currentWardrobe != null) {
+                                viewModel.fetchDressesByWardrobe(currentWardrobe.getId());
+                            }
+                        } else {
+                            searchContainer.setVisibility(View.VISIBLE);
+                            etSearch.requestFocus();
+                        }
+                    }
+                    return true;
                 }
-            } else {
-                searchContainer.setVisibility(View.VISIBLE);
-                etSearch.requestFocus();
-            }
-        });
+                return false;
+            });
+        }
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -1227,9 +1221,17 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         });
 
         // Main image picker - whole card clickable
-        page.findViewById(R.id.cardMainImage).setOnClickListener(v -> mainImagePickerLauncher.launch(MIME_IMAGE));
+        page.findViewById(R.id.cardMainImage).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.cy.loxia.ui.ImagePickerActivity.class);
+            intent.putExtra("crop_type", 2);
+            mainImagePickerLauncher.launch(intent);
+        });
         ImageView btnPickMainImage = page.findViewById(R.id.btnPickMainImage);
-        btnPickMainImage.setOnClickListener(v -> mainImagePickerLauncher.launch(MIME_IMAGE));
+        btnPickMainImage.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.cy.loxia.ui.ImagePickerActivity.class);
+            intent.putExtra("crop_type", 2);
+            mainImagePickerLauncher.launch(intent);
+        });
 
         btnSaveAddDress.setOnClickListener(v -> saveAddDressItem());
     }
@@ -1240,7 +1242,11 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         tvSloganPreview = page.findViewById(R.id.tvSloganPreview);
 
         page.findViewById(R.id.btnSaveProfile).setOnClickListener(v -> saveProfileDetail());
-        ivProfileAvatar.setOnClickListener(v -> avatarPickerLauncher.launch(MIME_IMAGE));
+        ivProfileAvatar.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.cy.loxia.ui.ImagePickerActivity.class);
+            intent.putExtra("crop_type", 0);
+            avatarPickerLauncher.launch(intent);
+        });
     }
 
     private void initDressDetailPage(View page) {
@@ -1495,8 +1501,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
             return;
         }
         // detail 页面可能还没 inflate，跳过 UI 更新
-        if (tvDetailTitle == null) return;
-        tvDetailTitle.setText(currentWardrobe.getName() + " 的裙子");
+        if (rvDressItems == null) return;
 
         // ⚡ 异步拉取数据前，清空数据，切断旧数据残影
         if (rvDressItems != null && dressItemAdapter != null) {
@@ -1710,7 +1715,11 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.H
         TextInputEditText etName = dialogView.findViewById(R.id.etWardrobeName);
         MaterialButton btnPick = dialogView.findViewById(R.id.btnPickCover);
 
-        btnPick.setOnClickListener(v -> wardrobeCoverPickerLauncher.launch(MIME_IMAGE));
+        btnPick.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.cy.loxia.ui.ImagePickerActivity.class);
+            intent.putExtra("crop_type", 1);
+            wardrobeCoverPickerLauncher.launch(intent);
+        });
 
         AlertDialog dialog = new AlertDialog.Builder(this)
             .setTitle("添加新柜子")

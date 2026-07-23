@@ -92,7 +92,15 @@ class HomeFragment : Fragment() {
         // Observe wardrobe list (ViewModel 已转换为 Domain Model)
         viewModel.wardrobeList.observe(viewLifecycleOwner) { wardrobes ->
             if (wardrobes == null) return@observe
-            wardrobeAdapter.submitList(wardrobes)
+            val isInitialLoad = wardrobeAdapter.itemCount == 0 && wardrobes.isNotEmpty()
+            if (isInitialLoad) {
+                rvWardrobes.layoutAnimation = android.view.animation.AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_slide_up)
+            }
+            wardrobeAdapter.submitList(wardrobes) {
+                if (isInitialLoad) {
+                    rvWardrobes.scheduleLayoutAnimation()
+                }
+            }
         }
 
         // Observe stats

@@ -20,12 +20,14 @@
         <item name="strokeColor">@color/card_border</item>
     </style>
 
-    <!-- UCrop 裁剪界面主题（深色模式） -->
+    <!-- UCrop 裁剪界面主题（深色模式）：与 App 保持一致的色彩风格 -->
     <style name="UCropTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:statusBarColor">@color/pink_primary</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorPrimary">@color/pink_primary</item>
-        <item name="colorPrimaryDark">@color/pink_primary</item>
+        <item name="colorPrimaryDark">@color/bg_dark</item>
     </style>
 </resources>
